@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Quote Page{% endblock %}
+
+{% block page_style %}
+<link rel="stylesheet" href="{% static 'quotes/quotes_styles.css' %}">
+{% endblock %}
+{% block content %}
+
+<h1>Welcome to Quote Page</h1>
+<p>Descripcion: {{description}}</p>
+
+<p>Dias de la semana:</p>
+<ul>
+  {% for item in days_of_week %}
+   
+  <li><a href="{% url 'day-qoute' item.day %}">{{item.day}}</a></li>
+  {% empty %}
+  <li>No hay dias</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
