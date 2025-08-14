@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block title %}Minilibrary Page{% endblock %}
+{% block content %}
+
+    <h1>Welcome to the Minilibrary Page</h1>
+    <p>Descripcion: {{description}}</p>
+
+    {% if name == "Carlos" %}
+
+    <p>Hola Programmer</p>
+    {% else %}
+    <p>Hola Invitado</p>
+
+    
+    {% endif %}
+    <form method="get">
+        <input type="text" name="query_search" placeholder="Buscar por autor o por titulo" value="{%if query %} {{ query }} {% endif %}">
+        <input type="date" name="start"  value="{{ query_start }}">
+        <input type="date" name="end" value="{{ query_end }}">
+        <button type="submit">Filter</button>
+    </form>
+        
+    <ul>
+        {% for book in page_obj %}
+            <li>{{ book.title }} - {{ book.author.name }} - {{ book.publication_date }} </li>
+            {% empty %}
+              <li>No hay libros disponibles</li>
+
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&{{query_string}}">&laquo; primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}&{{query_string}}">anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&{{query_string}}">siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&{{query_string}}">ultima &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
+
+
+  
+
+
